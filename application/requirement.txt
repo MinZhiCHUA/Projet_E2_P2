@@ -1,3 +1,6 @@
 Python 3.8.0
 Flask 2.0.1
 Werkzeug 2.0.1
+Pandas
+Numpy
+Sklearn 1.1.2

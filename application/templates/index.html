@@ -1,38 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Prédiction du prix de la maison</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/main.css') }}">
-    <script src='main.js'></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>
+    {% block title %}
+    Home
+    {% endblock %}
+  </title>
 </head>
 
 <body>
-    <div class="register_page">
-        <div class="form">
-            <form action="{{url_for('predict')}}" method="POST">
-
-                Année de construction: <input type="number" name='Year_Built' placeholder="Quelle est l'année de construction?"><br>
-                Surface de la cave: <input type="number" name='Total_Bsmt_SF' placeholder="Surface de la cave en m2"><br>
-                Surface du premier étage: <input type="number" name='1st_Flr_SF' placeholder="Surface du 1er étage en m2"><br>
-                Surface habitable au sol: <input type="number" name='Gr_Liv_Area' placeholder="Surface habitable en m2"><br>
-                Surface du garage: <input type="number" name='Garage_Area' placeholder="Surface du garage en m2"><br>
-                Qualité générale des finitions et des matérieux: <input type="number" name='Overall_Qual' placeholder="Qualité entre 1 (très mauvais) et 10 (Excellent)"><br>
-                Nombre de salle de bain: <input type="number" name='Full_Bath' placeholder="Nombre de salles de bain"><br>
-                Qualité des matériaux extérieurs: <input type="text" name='Exter_Qual' placeholder=" Ex:Excellent, Gd:Good, TA:Average, Fa:Fair, Po:Poor"><br>
-                Qualité des matérieux de la cuisine: <input type="text" name='Kitchen_Qual' placeholder="Ex:Excellent, Gd:Good, TA:Average, Fa:Fair, Po:Poor"><br>
-                Quartier: <input type="text" name='Neighborhood' placeholder="Nom du quartier de Ames"><br>
-                <input type="submit" value="predict" class="submit">
-            </form>
-            <p> La maison vaut: {{data}}</p>
+    <nav class="navbar navbar-expand-sm">
+      <div class="container-fluid">
+  
+        <div class="col-md-3 my-0">
+          <div class="row">
+            <div class="col-md-11 row">
+              <img src="/static/assets/house_logo.png" class="mr-4" height="50px">
+              <p class="h2 text-white pt-2">House Price Prediction App</p>
+            </div>
+            <div class="col-md-1">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                <span class="navbar-toggler-icon">Menu</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-    </div>
-
-
-</body>
-
-</html>
+        <div class="col-md-6 my-0 navbar-collapse collapse" id="navbar">
+            <ul class="navbar-nav nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link item text-white" aria-current="page" href="{{ url_for('main.index') }}"><i
+                    class="material-icons" style="color:white">home</i><br />Home</a>
+              </li>
+              {% if not current_user.is_authenticated %}
+                <li class="nav-item ml-3">
+                  <a class="nav-link item text-white" href="{{ url_for('main.predict') }}"><i class="material-icons"
+                      style="color:white">dashboard</i><br />Predictions</a>
+                </li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li class="nav-item ml-3">
+                    <a class="nav-link item text-white" href="{{ url_for('auth.predict') }}"><i class="material-icons"
+                        style="color:white">dashboard</i><br />Predictions</a>
+                  </li>
+                <li class="nav-item ml-3">
+                    <a class="nav-link item text-white" href="{{ url_for('auth.history') }}"><i class="material-icons"
+                        style="color:white">dashboard</i><br />History</a>
+                  </li>
+                  {% endif %}
+            </ul>
+          </div>
+          <div class="col-md-3 my-0">
+            <ul class="navbar-nav justify-content-end">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item ml-3">
+                  <a class="nav-link item text-white" href="#">Welcome, user! </a>
+                </li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li class="nav-item ml-3">
+                    <a class="nav-link text-white" name="signup" href="{{ url_for('main.signup') }}">Sign up</a>
+                  </li>
+                <li class="nav-item ml-3">
+                  <a class="nav-link text-white" name="login" href="{{ url_for('main.login') }}">Login</a>
+                </li>
+                {% else %}
+                <li class="nav-item ml-3">
+                    <a class="nav-link text-white" name="Logout" href="{{ url_for('auth.logout') }}">Logout</a>
+                  </li>
+                {% endif %}
+              </ul>
+          </div>
+        </div>
+      </nav>
+      {% block content %}
+      <section class="container-fluid" id="intro">
+        <div class="row col-10 m-auto">
+          <div class="col-6">
+            <h1 style="text-align: left;">Introduction</h1>
+            <p id="isPasted">House prices increase every year, so there is a need for a system to predict house prices
+                 in the future. House price prediction can help the developer determine the selling price of a 
+                 house and can help the customer to arrange the right time to purchase a house. There are three 
+                 factors that influence the price of a house which include physical conditions, concept and location. &nbsp;</p>
+            <p>Our app aims to predict house prices based on houses in XXXXXX city with linear regression classification method. 
+                The predicted result from this research provides a reliable estimation on the amount of loan that is required
+                from the bank.
+            </p>
+          </div>
+          <img class="col-6" src="/static/assets/beautiful_house.jpg">
+        </div>
+      </section>
+    {% endblock %}
+  </body>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="/static/js/script.js"></script>
+  
+  </html>

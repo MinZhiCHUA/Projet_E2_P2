@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+
+<div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0" class="table" data-toggle="table" data-search="true">
+      <thead>
+        <tr>
+          {% for col_name in title %}
+          <th style="text-align:left" data-sortable="true">{{ col_name }}</th>
+          {% endfor %}
+          <th style="text-align:left" data-sortable="true">Action</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+    
+    
+        
+        {% for row  in predict_list%}
+        <tr>
+            
+            {% for i in range(lenght+2) %}
+                {% if i not in (0,1) %}
+                    <td data-sortable="true">{{ row[i] }}</td>
+                {% endif %} 
+            {% endfor %}
+            <td>
+            <a href="{{ url_for('auth.predict_delete', id=row[0]) }}">
+                <svg style="width:24px;height:24px"  viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                    d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
+                </svg>
+              </a>
+            </td>
+            
+        </tr>
+        
+        
+        {% endfor %}    
+
+            
+
+  </tbody>
+
+
+  </div>
+
+</body>
+</html>
+
+
+{% endblock %}

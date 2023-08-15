@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head >
+    
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Prédiction du prix de la maison</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/main.css') }}"> 
+    <script src='main.js'></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+</head>
+
+<body>
+    <div class="register_page">
+        <div class="form">
+            <form action="{{url_for('predict')}}" method="POST">
+                Requirements:<br>
+                <!-- <button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button> -->
+
+<button type="button" class="btn btn-link">Link</button>
+                <div class="form-group">
+                    <label for="formControlRange">Example Range input</label>
+                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangePrimary.value=value">
+                    <input type="text" id="rangePrimary" />
+                </div>
+                Year Built:<br>
+                <input type="number" name='Year_Built' placeholder="Year of Construction?"><br>
+                <br>
+                Rooms:<br>
+                <input type="number" name='Full_bath' placeholder="No. of full bathrooms?"><br>
+                <input type="number" name='Half_bath' placeholder="No. of half bathrooms?"><br>
+                <input type="number" name='TotRms_AbvGrd' placeholder="No. of functioning rooms?"><br>
+                <br>
+                Living Area:<br>
+                <input type="number" name='Gr_Liv_Area' placeholder="Living area (square feet)?"><br>
+                <br>
+                External Area:<br>
+                <input type="number" name='Lot_Area' placeholder="Lot area (square feet)?"><br>
+                <input type="number" name='Mas_Vnr_Area' placeholder="Mas Vnr area (square feet)?"><br>
+                <input type="number" name='Open_Porch' placeholder="Open Porch (square feet)?"><br>
+                <input type="number" name='Wood_Deck' placeholder="Wood Deck (square feet)?"><br>
+                <input type="number" name='Pool_Area' placeholder="Pool Area (square feet)?"><br>
+                <input type="text" name='Exter_Qual' placeholder=" Ex:Excellent, Gd:Good, TA:Average, Fa:Fair, Po:Poor"><br>
+
+                <br>
+                Condition:<br>
+                Features:<br>
+                Garage:<br>
+                Basement:<br>
+                Neighborhood: <br>
+                
+
+                Année de construction: <input type="number" name='Year_Built' placeholder="Quelle est l'année de construction?"><br>
+                Surface de la cave: <input type="number" name='Total_Bsmt_SF' placeholder="Surface de la cave en m2"><br>
+                Surface du premier étage: <input type="number" name='1st_Flr_SF' placeholder="Surface du 1er étage en m2"><br>
+                Surface habitable au sol: <input type="number" name='Gr_Liv_Area' placeholder="Surface habitable en m2"><br>
+                Surface du garage: <input type="number" name='Garage_Area' placeholder="Surface du garage en m2"><br>
+                Qualité générale des finitions et des matérieux: <input type="number" name='Overall_Qual' placeholder="Qualité entre 1 (très mauvais) et 10 (Excellent)"><br>
+                Nombre de salle de bain: <input type="number" name='Full_Bath' placeholder="Nombre de salles de bain"><br>
+                Qualité des matériaux extérieurs: <input type="text" name='Exter_Qual' placeholder=" Ex:Excellent, Gd:Good, TA:Average, Fa:Fair, Po:Poor"><br>
+                Qualité des matérieux de la cuisine: <input type="text" name='Kitchen_Qual' placeholder="Ex:Excellent, Gd:Good, TA:Average, Fa:Fair, Po:Poor"><br>
+                Quartier: <input type="text" name='Neighborhood' placeholder="Nom du quartier de Ames"><br>
+                <input type="submit" value="predict" class="submit">
+            </form>
+            <p> La maison vaut: {{data}}</p>
+        </div>
+
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script> -->
+</body>
+
+</html>
